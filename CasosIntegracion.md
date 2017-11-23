@@ -1,27 +1,24 @@
 #### TOC
 
-* [Casos presentados hasta octubre 2017](casos-presentados-hasta-octubre-2017)
+* [Casos presentados hasta octubre 2017](#casos-presentados-hasta-octubre-2017)
 * [Caso 13 - Crédito a CCR por Estorno Ajuste Inicial](#caso-13)
-    * [Descripción estorno ajuste inicial](#descripción-ai)
     * [Procedimiento estorno ajuste inicial](#procedimiento-ai)
     * [Script entorno ajuste inicial](#script-ai)
 * [Caso 15 - Crédito a CCR por Anulación de pedido facturado](#caso-15)
-    * [Descripción](#descripción)
     * [Procedimiento](#procedimiento)
     * [Script](#script)
 
 
 
-#### Casos presentados hasta octubre 2017
+#### Casos presentados en octubre 2017
 
 ![Imagen de casos presentados](/images/Casos.png)
 
 #### Caso 13
 #### Crédito a CCR por Estorno Ajuste Inicial
-
-#####Descripción AI
-[Volver al inicio](#toc)
-**Descripción:** Ocurre cuando se **anula una deuda**, ya sea esta con 
+[Volver](#toc)
+##### Descripción AI
+Ocurre cuando se **anula una deuda**, ya sea esta con 
 factura o sin factura y la deuda tiene ajuste inicial por CCR.   
 Cuando se anula la deuda, el importe de los ajustes realizados, debe ir al 
 Crédito de la cuenta pagos anticipados contra documentos por cobrar de la
@@ -37,8 +34,8 @@ Se consideran ajustes iniciales que tienen factura, los ajustes realizados
 a pedidos sin factura, no se toman en cuenta ya que el integrador hace lo mismo para los
 ajustes iniciales.
 
-#####Procedimiento AI
-[Volver al inicio](#toc)
+##### Procedimiento AI
+[Volver](#toc)
 
 1. Buscar **CodigoTitulo** en la tabla **Deudas.PagamentoContaCorrenteNatBO_v1** con los filtros:
 
@@ -66,8 +63,8 @@ Los datos de estructura comercial para determinar el segmento de oficina de la c
 tabla Natura.Revendedores.CodigoEstruturaNivel1
 
 
-#####Script AI
-[Volver al inicio](#toc)
+##### Script AI
+[Volver](#toc)
 
 ```SQL
 
@@ -136,12 +133,11 @@ Order by	codigoPessoa, Timestamp, CodigoCuenta
 
 #### Caso 15
 #### Crédito a CCR por Anulación de pedido facturado
-[Volver al inicio](#toc)
-
+[Volver](#toc)
 #####Descripción
-**Descripción:** Ocurre cuando se **anula una deuda**, ya sea esta con 
+Ocurre cuando se **anula una deuda**, ya sea esta con
 factura o sin factura y la deuda tiene pagos parciales o totales
-provenientes de la cobranza de alguna entidad o por ajuste inicial de CCR.  
+provenientes de la cobranza de alguna entidad o por ajuste inicial de CCR.   
 Cuando se anula la deuda, el importe de los pagos o ajustes realizados, debe ir al
 Crédito de la cuenta pagos anticipados contra documentos por cobrar de la
 consultora. 
@@ -157,8 +153,8 @@ a pedidos sin factura, no se toman en cuenta ya que el integrador hace lo mismo 
 ajustes iniciales y para los pagos parciales o totales los toma como Crédito a CCR por 
 Pagos a Pedidos No Facturados.
 
-#####Procedimiento
-[Volver al inicio](#toc)
+##### Procedimiento
+[Volver](#toc)
 
 1. Buscar **CodigoTitulo** en la tabla **Deudas.PagamentoContaCorrenteNatBO_v1** con los filtros:   
 
@@ -191,13 +187,9 @@ la cuenta Documentos Por Cobrar **Vigente**
 
 
 
-#####Script
-[Volver al inicio](#toc)
-
+##### Script
+[Volver](#toc)
 ```SQL
-
-
-
 
 Declare @DesdeFecha Date = '01/11/2017'
 
@@ -256,7 +248,4 @@ And			Origem='Anulación Pedido Facturado'
 And			F.Data is not null
 And			Cast(T.Dataoperacao as date) >= @DesdeFecha
 Order by	CodigoPedido, CodigoCuenta
-    
 ```
-
-
