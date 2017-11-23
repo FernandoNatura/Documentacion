@@ -14,7 +14,7 @@
 
 ![Imagen de casos presentados](/images/Casos.png)
 
-#### Caso 13
+### Caso 13
 #### Crédito a CCR por Estorno Ajuste Inicial
 [Volver](#toc)
 ##### Descripción AI
@@ -129,7 +129,7 @@ And             F.Data <= T.DataOperacao
 Order by        codigoPessoa, Timestamp, CodigoCuenta
 ```
 
-#### Caso 15
+### Caso 15
 #### Crédito a CCR por Anulación de pedido facturado
 [Volver](#toc)
 ##### Descripción
