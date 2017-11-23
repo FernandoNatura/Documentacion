@@ -47,7 +47,7 @@ ajustes iniciales.
 el codigoPedido y con éste buscar la factura.
 
 
-3. **Left Join** con la tabla **Facturas.NotaFiscalBoliviaPadraoERPOut_v1**  en el campo CodigoPedido para 
+3. **Left Join** con la tabla **Facturas.NotaFiscalBoliviaPadraoERPOut_v1**  en el campo **CodigoPedido** para 
 obtener la fecha de la factura si es que ésta existe.
 
 4. Con la query completa, obtener:
@@ -165,7 +165,7 @@ Pagos a Pedidos No Facturados.
 el codigoPedido y con éste buscar la factura.
 
 
-3. **Left Join** con la tabla **Facturas.NotaFiscalBoliviaPadraoERPOut_v1**  en el campo CodigoPedido para 
+3. **Left Join** con la tabla **Facturas.NotaFiscalBoliviaPadraoERPOut_v1**  en el campo **CodigoPedido** para 
 obtener la fecha de la factura si es que ésta existe.
 
 4. Con la query completa, obtener: 
