@@ -1,6 +1,6 @@
 #### TOC
 
-* [Casos presentados en octubre 2017](#casos-presentados-en-octubre)
+* [Casos presentados en noviembre 2017](#casos-presentados-en-noviembre)
 * [Caso 13 - Crédito a CCR por Estorno Ajuste Inicial](#caso-13)
     * [Procedimiento estorno ajuste inicial](#procedimiento-ai)
     * [Script entorno ajuste inicial](#script-ai)
@@ -10,7 +10,7 @@
 
 
 
-#### Casos presentados en octubre
+#### Casos presentados en noviembre
 
 ![Imagen de casos presentados](/images/Casos.png)
 
@@ -248,4 +248,5 @@ And			F.Data is not null
 And			Cast(T.Dataoperacao as date) >= @DesdeFecha
 Order by	CodigoPedido, CodigoCuenta
 ```
+
 [Volver](#toc)
