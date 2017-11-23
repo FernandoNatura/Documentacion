@@ -67,21 +67,24 @@ tabla **Natura.Revendedores.CodigoEstruturaNivel1**
 [Volver](#toc)
 
 ```SQL
-
+Use Intermedia
 Declare @DesdeFecha Date = '01/11/2017'
 
-Select          P.CodigoPessoa,
-                T.CodigoPedido,
+Select          CodigoPessoa, CodigoPedido, Fecha, Glosa, CodigoCuenta, Debit, Credit
+From
+(Select         P.CodigoPessoa, 
+                T.CodigoPedido, 
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Estorno Ajuste Inicial',
                 CodigoCuenta = '1130201' + 
                     Case 
-                        When R.CodigoEstruturaNivel1 = 2 Then 'SCZ'
+                        When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
                         When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
                         When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'
                     End,
                 Debit = Valor,
                 Credit = 0,
+                T.TimesTamp
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
 Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
 On              P.CodigoTitulo = T.CodigoTitulo
@@ -95,7 +98,7 @@ And             TipoRegistro = 'Crédito CCR'
 And             TipoBaixa='Crédito CCR' 
 And             Origem='Estorno Ajuste Inicial'
 And             T.operacao = 1 --- 1803
-And             F.Data <= T.DataOperacao 
+And             F.Data <= T.DataOperacao --- Fecha factura menor o igual al pedido 
 
 
 union all
@@ -112,6 +115,7 @@ Select          P.CodigoPessoa,
                     End,
                 Debit = 0,
                 Credit = Valor,
+                T.TimesTamp
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
 Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
 On              P.CodigoTitulo = T.CodigoTitulo
@@ -124,9 +128,11 @@ Where           databaixa >=@DesdeFecha
 And             TipoRegistro = 'Crédito CCR' 
 And             TipoBaixa='Crédito CCR' 
 And             Origem='Estorno Ajuste Inicial'
-And             T.operacao = 1 
-And             F.Data <= T.DataOperacao
+And             T.operacao = 1 --- 1803
+And             F.Data <= T.DataOperacao)X --- Fecha factura menor al pedido
+
 Order by        codigoPessoa, Timestamp, CodigoCuenta
+
 ```
 
 ### Caso 15
@@ -188,7 +194,7 @@ la cuenta Documentos Por Cobrar **Vigente**
 ### Script
 [Volver](#toc)
 ```SQL
-
+Use Intermedia
 Declare @DesdeFecha Date = '01/11/2017'
 
 Select          P.CodigoPessoa, 
