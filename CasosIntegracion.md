@@ -70,61 +70,60 @@ tabla **Natura.Revendedores.CodigoEstruturaNivel1**
 
 Declare @DesdeFecha Date = '01/11/2017'
 
-Select		    P.CodigoPessoa, 
-			    T.CodigoPedido, 
-		    	Fecha = Cast(T.Dataoperacao as DATE),
-		    	Glosa = 'Credito CCR por Estorno Ajuste Inicial',
-		    	CodigoCuenta = '1130201' + Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-		    		When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-		    		When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
-		    	Debit = Valor,
-		    	Credit = 0,
-		    	T.TimesTamp
-From	    	Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
-Inner Join  	Intermedia.Deudas.TituloPadraoERPOut_v1 T
-On		    	P.CodigoTitulo = T.CodigoTitulo
+Select          P.CodigoPessoa,
+                T.CodigoPedido,
+                Fecha = Cast(T.Dataoperacao as DATE),
+                Glosa = 'Credito CCR por Estorno Ajuste Inicial',
+                CodigoCuenta = '1130201' + Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ'
+                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                Debit = Valor,
+                Credit = 0,
+                T.TimesTamp
+From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
+Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
+On              P.CodigoTitulo = T.CodigoTitulo
 Left Join       Intermedia.Facturas.NotaFiscalBoliviaPadraoERPOut_v1 F
-On		    	T.CodigoPedido = F.CodigoPedido
-And		    	F.Situacao = 1
-Left Join   	Intermedia.Natura.Revendedores R
-ON		    	R.CodigoPessoa = P.CodigoPessoa
-Where	    	databaixa >= @DesdeFecha
-And		    	TipoRegistro = 'Crédito CCR' 
-And		    	TipoBaixa='Crédito CCR' 
-And		    	Origem='Estorno Ajuste Inicial'
-And		    	T.operacao = 1 --- 1803
-And		    	F.Data <= T.DataOperacao 
+On              T.CodigoPedido = F.CodigoPedido
+And             F.Situacao = 1
+Left Join       Intermedia.Natura.Revendedores R
+ON              R.CodigoPessoa = P.CodigoPessoa
+Where           databaixa >= @DesdeFecha
+And             TipoRegistro = 'Crédito CCR' 
+And             TipoBaixa='Crédito CCR' 
+And             Origem='Estorno Ajuste Inicial'
+And             T.operacao = 1 --- 1803
+And             F.Data <= T.DataOperacao 
 
 
 union all
 
-Select  		P.CodigoPessoa, 
-	    		T.CodigoPedido, 
-	    		Fecha = Cast(T.Dataoperacao as DATE),
-	    		Glosa = 'Credito CCR por Estorno Ajuste Inicial',
-	    		CodigoCuenta = '2120501' + Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-	    			When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-	    			When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
-	    		--R.DescricaoEstruturaNivel1,
-	    		Debit = 0,
-	    		Credit = Valor,
-	    		T.TimesTamp
-From    		Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
-Inner Join	    Intermedia.Deudas.TituloPadraoERPOut_v1 T
-On			    P.CodigoTitulo = T.CodigoTitulo
+Select          P.CodigoPessoa, 
+                T.CodigoPedido, 
+                Fecha = Cast(T.Dataoperacao as DATE),
+                Glosa = 'Credito CCR por Estorno Ajuste Inicial',
+                CodigoCuenta = '2120501' + Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
+                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                        Debit = 0,
+                        Credit = Valor,
+                        T.TimesTamp
+From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
+Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
+On              P.CodigoTitulo = T.CodigoTitulo
 Left Join       Intermedia.Facturas.NotaFiscalBoliviaPadraoERPOut_v1 F
-On			    T.CodigoPedido = F.CodigoPedido
-And			    F.Situacao = 1
-Left Join	    Intermedia.Natura.Revendedores R
-ON			    R.CodigoPessoa = P.CodigoPessoa
-Where		    databaixa >=@DesdeFecha
-And			    TipoRegistro = 'Crédito CCR' 
-And			    TipoBaixa='Crédito CCR' 
-And			    Origem='Estorno Ajuste Inicial'
-And			    T.operacao = 1 
-And			    F.Data <= T.DataOperacao
+On              T.CodigoPedido = F.CodigoPedido
+And             F.Situacao = 1
+Left Join       Intermedia.Natura.Revendedores R
+ON              R.CodigoPessoa = P.CodigoPessoa
+Where           databaixa >=@DesdeFecha
+And             TipoRegistro = 'Crédito CCR' 
+And             TipoBaixa='Crédito CCR' 
+And             Origem='Estorno Ajuste Inicial'
+And             T.operacao = 1 
+And             F.Data <= T.DataOperacao
 
-Order by	    codigoPessoa, Timestamp, CodigoCuenta
+Order by        codigoPessoa, Timestamp, CodigoCuenta
 ```
 
 #### Caso 15
@@ -189,61 +188,61 @@ la cuenta Documentos Por Cobrar **Vigente**
 
 Declare @DesdeFecha Date = '01/11/2017'
 
-Select		    P.CodigoPessoa, 
-			    T.CodigoPedido, 
-			    Fecha = Cast(T.Dataoperacao as DATE),
-			    Glosa = 'Credito CCR por Anulación de pedido',
-			    CodigoCuenta = '1130201' + 
+Select          P.CodigoPessoa, 
+                T.CodigoPedido, 
+                Fecha = Cast(T.Dataoperacao as DATE),
+                Glosa = 'Credito CCR por Anulación de pedido',
+                CodigoCuenta = '1130201' + 
                 Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-				    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-				    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
-			    Debit = Valor,
-			    Credit = 0
-From		    Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
-Inner Join	    Intermedia.Deudas.TituloPadraoERPOut_v1 T
-On			    P.CodigoTitulo = T.CodigoTitulo
+                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                Debit = Valor,
+                Credit = 0
+From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
+Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
+On              P.CodigoTitulo = T.CodigoTitulo
 Left Join       Intermedia.Facturas.NotaFiscalBoliviaPadraoERPOut_v1 F
-On			    T.CodigoPedido = F.CodigoPedido
-And			    F.Situacao = 1
-Left Join	    Intermedia.Natura.Revendedores R
-ON			    R.CodigoPessoa = P.CodigoPessoa
-Where		    databaixa >= @DesdeFecha
-And			    TipoRegistro = 'Crédito CCR' 
-And			    TipoBaixa='Crédito CCR' 
-And			    Origem='Anulación Pedido Facturado'
-And			    T.operacao = 1 
-And			    F.Data is not null
-And			    Cast(T.Dataoperacao as date) >= @DesdeFecha
+On              T.CodigoPedido = F.CodigoPedido
+And             F.Situacao = 1
+Left Join       Intermedia.Natura.Revendedores R
+ON              R.CodigoPessoa = P.CodigoPessoa
+Where           databaixa >= @DesdeFecha
+And             TipoRegistro = 'Crédito CCR' 
+And             TipoBaixa='Crédito CCR' 
+And             Origem='Anulación Pedido Facturado'
+And             T.operacao = 1 
+And             F.Data is not null
+And             Cast(T.Dataoperacao as date) >= @DesdeFecha
 
 
 union all
 
-Select		    P.CodigoPessoa, 
-			    T.CodigoPedido, 
-			    Fecha = Cast(T.Dataoperacao as DATE),
-			    Glosa = 'Credito CCR por Anulación de pedido',
-			    CodigoCuenta = '2120501' + 
+Select          P.CodigoPessoa, 
+                T.CodigoPedido, 
+                Fecha = Cast(T.Dataoperacao as DATE),
+                Glosa = 'Credito CCR por Anulación de pedido',
+                CodigoCuenta = '2120501' + 
                 Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-				    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-				    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
-			    Debit = 0,
-			    Credit = Valor 
-From		    Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
-Inner Join	    Intermedia.Deudas.TituloPadraoERPOut_v1 T
-On			    P.CodigoTitulo = T.CodigoTitulo
-And			    T.operacao = 1 
+                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                Debit = 0,
+                Credit = Valor 
+From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
+Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
+On              P.CodigoTitulo = T.CodigoTitulo
+And             T.operacao = 1 
 Left Join       Intermedia.Facturas.NotaFiscalBoliviaPadraoERPOut_v1 F
-On			    T.CodigoPedido = F.CodigoPedido
-And			    F.Situacao = 1
-Left Join	    Intermedia.Natura.Revendedores R
-ON			    R.CodigoPessoa = P.CodigoPessoa
-Where		    databaixa >=@DesdeFecha 
-And			    TipoRegistro = 'Crédito CCR' 
-And			    TipoBaixa='Crédito CCR' 
-And			    Origem='Anulación Pedido Facturado'
-And			    F.Data is not null
-And			    Cast(T.Dataoperacao as date) >= @DesdeFecha
-Order by	    CodigoPedido, CodigoCuenta
+On              T.CodigoPedido = F.CodigoPedido
+And             F.Situacao = 1
+Left Join       Intermedia.Natura.Revendedores R
+ON              R.CodigoPessoa = P.CodigoPessoa
+Where           databaixa >=@DesdeFecha 
+And             TipoRegistro = 'Crédito CCR' 
+And             TipoBaixa='Crédito CCR' 
+And             Origem='Anulación Pedido Facturado'
+And             F.Data is not null
+And             Cast(T.Dataoperacao as date) >= @DesdeFecha
+Order by        CodigoPedido, CodigoCuenta
 ```
 
 [Volver](#toc)
