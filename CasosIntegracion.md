@@ -78,10 +78,10 @@ Select          P.CodigoPessoa,
                     Case 
                         When R.CodigoEstruturaNivel1 = 2 Then 'SCZ'
                         When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'
+                    End,
                 Debit = Valor,
                 Credit = 0,
-                T.TimesTamp
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
 Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
 On              P.CodigoTitulo = T.CodigoTitulo
@@ -108,7 +108,8 @@ Select          P.CodigoPessoa,
                     Case 
                         When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
                         When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'
+                    End,
                 Debit = 0,
                 Credit = Valor,
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
@@ -195,10 +196,11 @@ Select          P.CodigoPessoa,
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Anulación de pedido',
                 CodigoCuenta = '1130201' + 
-                Case 
-                    When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-                    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                    Case 
+                        When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
+                        When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'
+                    End,
                 Debit = Valor,
                 Credit = 0
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
@@ -225,10 +227,11 @@ Select          P.CodigoPessoa,
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Anulación de pedido',
                 CodigoCuenta = '2120501' + 
-                Case 
-                    When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-                    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                    Case 
+                        When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
+                        When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'
+                    End,
                 Debit = 0,
                 Credit = Valor 
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
