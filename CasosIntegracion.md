@@ -30,7 +30,7 @@ consultora.
 |Pagos Anticipados     |      |  X   |
 
 **Nota:**    
-Se consideran ajustes iniciales que tienen factura, los ajustes realizados 
+Se consideran los estornos por ajustes iniciales que tienen factura, los estornos realizados 
 a pedidos sin factura, no se toman en cuenta ya que el integrador hace lo mismo para los
 ajustes iniciales.
 
