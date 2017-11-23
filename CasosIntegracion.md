@@ -1,6 +1,6 @@
 #### TOC
 
-* [Casos presentados hasta octubre 2017](#casos-presentados-hasta-octubre-2017)
+* [Casos presentados en octubre 2017](#casos-presentados-en-octubre)
 * [Caso 13 - Crédito a CCR por Estorno Ajuste Inicial](#caso-13)
     * [Procedimiento estorno ajuste inicial](#procedimiento-ai)
     * [Script entorno ajuste inicial](#script-ai)
@@ -10,7 +10,7 @@
 
 
 
-#### Casos presentados en octubre 2017
+#### Casos presentados en octubre
 
 ![Imagen de casos presentados](/images/Casos.png)
 
@@ -134,7 +134,7 @@ Order by	codigoPessoa, Timestamp, CodigoCuenta
 #### Caso 15
 #### Crédito a CCR por Anulación de pedido facturado
 [Volver](#toc)
-#####Descripción
+##### Descripción
 Ocurre cuando se **anula una deuda**, ya sea esta con
 factura o sin factura y la deuda tiene pagos parciales o totales
 provenientes de la cobranza de alguna entidad o por ajuste inicial de CCR.   
