@@ -74,9 +74,11 @@ Select          P.CodigoPessoa,
                 T.CodigoPedido,
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Estorno Ajuste Inicial',
-                CodigoCuenta = '1130201' + Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ'
-                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
-                    When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
+                CodigoCuenta = '1130201' + 
+                    Case 
+                        When R.CodigoEstruturaNivel1 = 2 Then 'SCZ'
+                        When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                        When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
                 Debit = Valor,
                 Credit = 0,
                 T.TimesTamp
@@ -102,12 +104,13 @@ Select          P.CodigoPessoa,
                 T.CodigoPedido, 
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Estorno Ajuste Inicial',
-                CodigoCuenta = '2120501' + Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
-                    When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
+                CodigoCuenta = '2120501' + 
+                    Case 
+                        When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
+                        When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
                         When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
-                        Debit = 0,
-                        Credit = Valor,
-                        T.TimesTamp
+                Debit = 0,
+                Credit = Valor,
 From            Intermedia.Deudas.PagamentoContaCorrenteNatBO_v1 P
 Inner Join      Intermedia.Deudas.TituloPadraoERPOut_v1 T
 On              P.CodigoTitulo = T.CodigoTitulo
@@ -122,7 +125,6 @@ And             TipoBaixa='Crédito CCR'
 And             Origem='Estorno Ajuste Inicial'
 And             T.operacao = 1 
 And             F.Data <= T.DataOperacao
-
 Order by        codigoPessoa, Timestamp, CodigoCuenta
 ```
 
@@ -193,7 +195,8 @@ Select          P.CodigoPessoa,
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Anulación de pedido',
                 CodigoCuenta = '1130201' + 
-                Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
+                Case 
+                    When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
                     When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
                     When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
                 Debit = Valor,
@@ -222,7 +225,8 @@ Select          P.CodigoPessoa,
                 Fecha = Cast(T.Dataoperacao as DATE),
                 Glosa = 'Credito CCR por Anulación de pedido',
                 CodigoCuenta = '2120501' + 
-                Case When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
+                Case 
+                    When R.CodigoEstruturaNivel1 = 2 Then 'SCZ' 
                     When R.CodigoEstruturaNivel1 = 3 Then 'CBA'
                     When R.CodigoEstruturaNivel1 = 4 Then 'LPZ'End,
                 Debit = 0,
