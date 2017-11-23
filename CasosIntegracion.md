@@ -130,7 +130,6 @@ And			F.Data <= T.DataOperacao)X
 Order by	codigoPessoa, Timestamp, CodigoCuenta
 ```
 
-
 #### Caso 15
 #### Crédito a CCR por Anulación de pedido facturado
 [Volver](#toc)
@@ -249,3 +248,4 @@ And			F.Data is not null
 And			Cast(T.Dataoperacao as date) >= @DesdeFecha
 Order by	CodigoPedido, CodigoCuenta
 ```
+[Volver](#toc)
