@@ -68,6 +68,9 @@ tabla **Natura.Revendedores.CodigoEstruturaNivel1**
 
 ```SQL
 Use Intermedia
+
+--- Asiento:
+
 Declare @DesdeFecha Date = '01/11/2017'
 
 Select          CodigoPessoa, CodigoPedido, Fecha, Glosa, CodigoCuenta, Debit, Credit
@@ -98,7 +101,7 @@ And             TipoRegistro = 'Crédito CCR'
 And             TipoBaixa='Crédito CCR' 
 And             Origem='Estorno Ajuste Inicial'
 And             T.operacao = 1 --- 1803
-And             F.Data <= T.DataOperacao --- Fecha factura menor o igual al pedido 
+And             F.Data is not null
 
 
 union all
@@ -128,9 +131,9 @@ Where           databaixa >=@DesdeFecha
 And             TipoRegistro = 'Crédito CCR' 
 And             TipoBaixa='Crédito CCR' 
 And             Origem='Estorno Ajuste Inicial'
-And             T.operacao = 1 --- 1803
-And             F.Data <= T.DataOperacao)X --- Fecha factura menor al pedido
-
+And             T.operacao = 1
+And             F.Data is not null)X
+--Where         CodigoPessoa = 6091
 Order by        codigoPessoa, Timestamp, CodigoCuenta
 
 ```
