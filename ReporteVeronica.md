@@ -1,9 +1,9 @@
 ```SQL
+Drop table #Vero
 Create LOCAL TEMPORARY TABLE #Vero( "TransId" Integer, "TaxDate" Timestamp, "BaseRef" nvarchar(11), "TransType" nvarchar(20), "Origen" nvarchar(100), "Concepto" nvarchar(50),
 						"FACTURA" smallint, "PAGO" smallint, "GN_MOV_DIA" smallint, "GN_INTERES" smallint, "GN_VENTAS" smallint,
 						 "RECONCILIACION" smallint, "OTROS" smallint  );
---Select * from #Vero
---Drop table #Vero
+
 
 Insert into #Vero ("TransId", "TaxDate", "BaseRef" ,"TransType", "Origen", "Concepto", 
 				"FACTURA", "PAGO", "GN_MOV_DIA", "GN_INTERES", "GN_VENTAS", "RECONCILIACION", "OTROS")
@@ -37,7 +37,7 @@ Select 	"TransId",
       Case When "TransType" in(60,67,59,19,20,25,69,321,10000071,14) Then 1 Else 0 End "OTROS"
 from 	OJDT 
 Where "TaxDate" Between '20180101' And '20181231'
-And 	"BaseRef" between 3000000 and 3000109
+And 	"BaseRef" between 3000000 and 3000400
 --And	"TaxDate" between '20180102' and '20180102'	
 Order by "BaseRef";
 
@@ -60,5 +60,6 @@ Select 		'' As "Fecha Entrega",
 			'' "Observaciones",
 			'' "Elaborado Por"
 From		#Vero 
+
 
 ```
