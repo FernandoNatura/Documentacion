@@ -92,3 +92,41 @@ Group by	"ShortName"
 
 
 ```
+
+
+### Asientos por TransId
+
+```SQL
+Select		
+		--"ShortName",
+		A."FormatCode",
+		--A."Segment_0",
+		A."AcctName",
+		AC."TransId",
+		AL."Line_ID",
+		AL."LineMemo",
+		AL."U_NUM_FACT",
+		AL."U_NUMORDEN",
+		TO_CHAR(AC."TaxDate", 'dd/mm/yyyy') As "TaxDate",
+		TO_CHAR(AC."CreateDate", 'dd/mm/yyyy') As "CreateDate",
+		AC."CreateTime",
+		AC."UserSign",
+		--"U_NPedidoGera" As "PedidoGera",
+		--Cast(AL."Debit" as Decimal(10,2)) As "Debit" ,
+		--Cast(AL."Credit" as Decimal(10,2)) as "Credit" ,
+		Cast(Coalesce((Case When A."Segment_0" = '1130201' then Coalesce("Debit",0) End),0) as Decimal(10,2)) As "Debit",
+	    Cast(Coalesce((Case When A."Segment_0" = '1130201' then Coalesce("Credit",0) End),0) as Decimal(10,2)) as "Credit"
+		--Cast(Coalesce((Case When A."Segment_0" = '1130202' then Coalesce("Debit",0) End),0) as Decimal(10,2)) As "Debit Vencida",
+	    --Cast(Coalesce((Case When A."Segment_0" = '1130202' then Coalesce("Credit",0) End),0) as Decimal(10,2)) as "Credit Vencida", 
+		--Cast(Coalesce((Case When A."Segment_0" = '1130203' then Coalesce("Debit",0) End),0) as Decimal(10,2)) As "Debit Incobrable",
+	    --Cast(Coalesce((Case When A."Segment_0" = '1130203' then Coalesce("Credit",0) End),0) as Decimal(10,2)) as "Credit Incobrable", 
+		--Cast(Coalesce((Case When A."Segment_0" = '212050%' then Coalesce("Debit",0) End),0) as Decimal(10,2)) As "Debit_PA",
+		--Cast(Coalesce((Case When A."Segment_0" = '212050%' then Coalesce("Credit",0) End),0) as Decimal(10,2)) As "Credit_PA"
+FROM	OJDT AC
+Inner Join	JDT1 AL
+On		AC."TransId" = AL."TransId"
+Inner Join	OACT A
+On		AL."Account" = A."AcctCode" 
+Where 	AC."TransId" = 62141
+Order By "Line_ID" 
+```
