@@ -1,4 +1,5 @@
 ### Mayores Documentos x Cobrar y Pagos anticipados HANA  
+
 Este script obtiene los mayores de las cuentas mencionadas por consultora
 hasta la fecha.
 
@@ -32,7 +33,7 @@ And		AC."TaxDate" >= '20170531'
 Order by	AC."TaxDate", AC."TransId", AL."Line_ID"
 ```
 
-### Mayores de cuentas clasificadas por vencimiento
+### Mayores de cuentas por cobrar y Pagos clasificados y anticipados por Consultora 
 
 ``` SQL
 Select		
@@ -65,9 +66,8 @@ Where	"ShortName" = 'C24849'
 And		AC."TaxDate" <= '20171231'
 --And 	A."Segment_0" = '1130201'
 Order by	AC."TaxDate", AC."TransId", AL."Line_ID"
-
 ```
-### Totales Mayores de cuentas clasificadas por vencimiento
+### Totales Mayores de cuentas por cobrar y Pagos anticipados por Consultora
 
 ``` SQL
 Select	
@@ -89,8 +89,6 @@ Where	"ShortName" = 'C24849'
 And		AC."TaxDate" <= '20171231'
 --And 	A."Segment_0" = '1130201'
 Group by	"ShortName"
-
-
 ```
 
 
@@ -129,4 +127,65 @@ Inner Join	OACT A
 On		AL."Account" = A."AcctCode" 
 Where 	AC."TransId" = 62141
 Order By "Line_ID" 
+```
+
+### Mayores por cuenta contable según SAP
+
+```SQL
+Do Begin
+
+Declare cuenta varchar(20):= '4210101CBB';
+Declare fecha date = '20180706';
+
+Select	A."AcctName",	
+		TO_CHAR(AC."TaxDate", 'dd/mm/yyyy') As "Fecha de contabilización",
+		TO_CHAR(AL."DueDate", 'dd/mm/yyyy') As "Fecha de vencimiento",
+		'AS' As "Tipo",
+		AC."TransId" As "Operación",
+		AC."Ref1" As "Referencia 1",
+		AL."LineMemo" As "Info.detallada",
+		AL."ContraAct" As "Cuenta de contrapartida",
+		A."AcctName" ,
+		Cast(Coalesce((Case When A."FormatCode" = cuenta then Coalesce("Debit",0) End),0) as Decimal(10,2)) As "Débito",
+	    Cast(Coalesce((Case When A."FormatCode" = cuenta then Coalesce("Credit",0) End),0) as Decimal(10,2)) as "Crédito",
+	    '' As "Saldo (ML)"
+FROM	OJDT AC
+Inner Join	JDT1 AL
+On		AC."TransId" = AL."TransId"
+Inner Join	OACT A
+On		AL."Account" = A."AcctCode" 
+Where	AC."TaxDate" = fecha
+And 	A."FormatCode" = cuenta	
+Order by	AC."TaxDate", AC."TransId", AL."Line_ID";
+
+End
+```
+### Totales Mayores por cuenta contable según SAP
+
+```SQL
+
+Do Begin
+
+Declare cuenta varchar(20):= '4210101CBB';
+Select		
+		Max(AL."TaxDate"),
+		A."FormatCode",
+		A."AcctName",
+		Sum(Cast(Coalesce((Case When A."FormatCode" = cuenta then Coalesce("Debit",0) End),0) as Decimal(10,2))) As "Débito",
+	    Sum(Cast(Coalesce((Case When A."FormatCode" = cuenta then Coalesce("Credit",0) End),0) as Decimal(10,2))) as "Credito",
+	    Sum(Cast(Coalesce((Case When A."FormatCode" = cuenta then Coalesce("Debit",0) End),0) as Decimal(10,2)))  -
+	    Sum(Cast(Coalesce((Case When A."FormatCode" = cuenta then Coalesce("Credit",0) End),0) as Decimal(10,2)))  As "Saldo"
+FROM	OJDT AC
+Inner Join	JDT1 AL
+On		AC."TransId" = AL."TransId"
+Inner Join	OACT A
+On		AL."Account" = A."AcctCode" 
+Where	AC."TaxDate" <= '20170706'
+And 	A."FormatCode" = cuenta
+AND AC."TransId" NOT IN (SELECT T2."StornoToTr" FROM OJDT T2 WHERE IFNULL(T2."StornoToTr",0)<>0)
+AND AC."StornoToTr" is null
+Group by A."FormatCode", A."AcctName";	
+
+
+End
 ```
